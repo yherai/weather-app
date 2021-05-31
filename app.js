@@ -1,12 +1,30 @@
 const forecast = require('./utils/forecast');
 const geocode = require('./utils/geocode');
 
-forecast(34.0544, -118.2439).then(({ error, data }) => {
-  console.log('Error', error);
-  console.log('Data', data);
-});
+const address = process.argv[2];
 
-geocode('Los Angeles').then(({ error, data }) => {
-  console.log('Error', error);
-  console.log('Data', data);
+if (!address) {
+  console.log('Please provide an address');
+  return;
+}
+
+geocode(address).then(({ error, data }) => {
+  if (error) {
+    console.log('Error', error);
+    return;
+  }
+
+  const { location, latitude, longitude } = data;
+
+  forecast(latitude, longitude).then(({ error, data }) => {
+    if (error) {
+      console.log('Error', error);
+      return;
+    }
+
+    const { weather, temperature, feelslike } = data;
+    console.log(
+      `${location}. Weather: ${weather}. Temperature: ${temperature}. Thermal sensation: ${feelslike}`
+    );
+  });
 });
