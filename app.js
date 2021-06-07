@@ -8,23 +8,25 @@ if (!address) {
   return;
 }
 
-geocode(address).then(({ error, data }) => {
-  if (error) {
+geocode(address).then(({ error: geocodeError, data: geocodeData }) => {
+  if (geocodeError) {
     console.log('Error', error);
     return;
   }
 
-  const { location, latitude, longitude } = data;
+  const { location, latitude, longitude } = geocodeData;
 
-  forecast(latitude, longitude).then(({ error, data }) => {
-    if (error) {
-      console.log('Error', error);
-      return;
+  forecast(latitude, longitude).then(
+    ({ error: forecastError, data: foreCastData }) => {
+      if (forecastError) {
+        console.log('Error', error);
+        return;
+      }
+
+      const { weather, temperature, feelslike } = foreCastData;
+      console.log(
+        `${location}. Weather: ${weather}. Temperature: ${temperature}. Thermal sensation: ${feelslike}`
+      );
     }
-
-    const { weather, temperature, feelslike } = data;
-    console.log(
-      `${location}. Weather: ${weather}. Temperature: ${temperature}. Thermal sensation: ${feelslike}`
-    );
-  });
+  );
 });
