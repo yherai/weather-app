@@ -17,13 +17,13 @@ geocode(address).then(({ error: geocodeError, data: geocodeData }) => {
   const { location, latitude, longitude } = geocodeData;
 
   forecast(latitude, longitude).then(
-    ({ error: forecastError, data: foreCastData }) => {
+    ({ error: forecastError, data: forecastData }) => {
       if (forecastError) {
         console.log('Error', forecastError);
         return;
       }
 
-      const { weather, temperature, feelslike } = foreCastData;
+      const { weather, temperature, feelslike } = forecastData;
       console.log(
         `${location}. Weather: ${weather}. Temperature: ${temperature}. Thermal sensation: ${feelslike}`
       );
