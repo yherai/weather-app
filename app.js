@@ -10,7 +10,7 @@ if (!address) {
 
 geocode(address).then(({ error: geocodeError, data: geocodeData }) => {
   if (geocodeError) {
-    console.log('Error', error);
+    console.log('Error', geocodeError);
     return;
   }
 
@@ -19,7 +19,7 @@ geocode(address).then(({ error: geocodeError, data: geocodeData }) => {
   forecast(latitude, longitude).then(
     ({ error: forecastError, data: foreCastData }) => {
       if (forecastError) {
-        console.log('Error', error);
+        console.log('Error', forecastError);
         return;
       }
 
